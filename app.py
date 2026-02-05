@@ -4,10 +4,19 @@ from auth import validate_api_key
 from audio_utils import decode_audio
 from features import extract_features
 from model_utils import predict_voice
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 SUPPORTED_LANGUAGES = ["Tamil", "English", "Hindi", "Malayalam", "Telugu"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class VoiceRequest(BaseModel):
     language: str
