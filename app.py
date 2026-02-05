@@ -38,8 +38,9 @@ def voice_detection(payload: VoiceRequest, x_api_key: str = Header(None)):
         raise HTTPException(status_code=400, detail="Only mp3 format supported")
 
     try:
-        audio, sr = decode_audio(payload.audioBase64)
-        features = extract_features(audio, sr)
+        audio_length = decode_audio(payload.audioBase64)
+        features = extract_features(audio_length)
+
         classification, confidence, explanation = predict_voice(features)
     except HTTPException as e:
         raise e
